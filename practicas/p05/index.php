@@ -94,6 +94,16 @@
         $z[0] = 'MySQL';
         print_r($z).'<br>';
 
+        //4. Lee y muestra los valores de las variables del ejercicio anterior, pero ahora con la ayuda de
+        //la matriz $GLOBALS o del modificador global de PHP.
+        echo "<h3>Lectura de valores utilizando \$GLOBALS</h3>";
+        echo 'El valor de $GLOBALS["a"] es: ' . $GLOBALS['a'] . '<br>';
+        echo 'El valor de $GLOBALS["b"] es: ' . $GLOBALS['b'] . '<br>';
+        echo 'El valor de $GLOBALS["c"] es: ' . $GLOBALS['c'] . '<br>';
+        echo 'Contenido de $GLOBALS["z"]: ';
+        print_r($GLOBALS['z']);
+        echo '<br>';
+
     ?>
 </body>
 </html>
