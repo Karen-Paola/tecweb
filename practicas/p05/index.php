@@ -31,6 +31,68 @@
         echo '<li>La variable $house*5 no es válida. Contiene un * que es un carácter especial y no está 
               permitido en los nombres de variables en PHP.</li>';
         echo '</ul>';
+        echo '<br>';
+
+
+        /**2. Proporcionar los valores de $a, $b, $c como sigue:
+            $a = “ManejadorSQL”;
+            $b = 'MySQL’;
+            $c = &$a; */
+        echo "<h2>Ejercicio 2: Valores de las variales </h2>";
+        $a = 'ManejadorSQL';
+        $b = 'MySQL';
+        $c = &$a;
+        
+        //a. Ahora muestra el contenido de cada variable
+        echo "<h4>Contenido inicial de las variables:</h4>";
+        echo 'Valor de $a: ' . $a . '<br>';
+        echo 'Valor de $b: ' . $b . '<br>';
+        echo 'Valor de $c (referencia a $a): ' . $c . '<br>';
+        
+        //b. Agrega al código actual las siguientes asignaciones:
+        $a ='PHP server';
+        $b = &$a;
+            
+        //c. Vuelve a mostrar el contenido de cada uno
+        echo "<h4>Contenido de las variables (editado):</h4>";
+        echo 'Valor de $a: ' . $a . '<br>';
+        echo 'Valor de $b: ' . $b . '<br>';
+        echo 'Valor de $c (referencia a $a): ' . $c . '<br>';
+
+        //d. Describe en y muestra en la página obtenida qué ocurrió en el segundo bloque de asignaciones
+        echo "<h3>Explicación:</h3>";
+        echo 'En la segunda asignación el valor de $a cambió a PHP server, $b se convierte en una referencia de $a, 
+              por lo que su salida cambió, $a afecta también a $b.<br>';
+        echo 'Dado que $c ya era una referencia a $a desde el principio, $c también refleja los cambios en $a.<br>';
+
+
+        
+        /**3. Muestra el contenido de cada variable inmediatamente después de cada asignación,
+        verificar la evolución del tipo de estas variables (imprime todos los componentes de los
+        arreglo): */
+        echo "<h2>Ejercicio 3: Contenido de las variables</h2>";
+
+        $a = 'PHP5';
+        echo 'El valor de $a es:'.$a.'<br>';
+
+        $z[] = &$a;
+        print_r($z).'<br>'; //para mandar todos los valores del arreglo
+
+        $b = '5a version de PHP';
+        echo '<br>';
+        echo 'El valor de $b es:'.$b.'<br>';
+
+        $c = $b*10;
+        echo 'El valor de $c es:'.$c.'<br>';
+
+        $a .= $b;
+        echo 'El valor de $a es:'.$a.'<br>';
+
+        $b *= $c;
+        echo 'El valor de $b es:'.$b.'<br>';
+
+        $z[0] = 'MySQL';
+        print_r($z).'<br>';
 
     ?>
 </body>
