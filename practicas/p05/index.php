@@ -118,8 +118,41 @@
         $c = (double) $a; //La cadena "9E3" es notación científica en PHP y se convierte a 9000.0 (9 * 10^3) cuando se convierte a double
         echo 'La variable $c contiene: '.$c.'<br>';
             
+        /**6. Dar y comprobar el valor booleano de las variables $a, $b, $c, $d, $e y $f y muéstralas
+            usando la función var_dump(<datos>).
+            Después investiga una función de PHP que permita transformar el valor booleano de $c y $e
+            en uno que se pueda mostrar con un echo: */
+            echo "<h2>Ejercicio 6: Dar y comprobar el valor booleano</h2>";
+            $a = '0';
+            $b = 'TRUE';
+            $c = FALSE;
+            $d = ($a OR $b);
+            $e = ($a AND $c);
+            $f = ($a XOR $b); 
+
+            echo 'Valor de $a: ';
+            var_dump((bool)$a); 
+            echo '<br>';
             
+            echo 'Valor de $b: ';
+            var_dump((bool)$b);
+            echo '<br>';
+
+            echo 'Valor de $c: ';
+            var_dump($c); 
+            echo '<br>';
             
+            echo 'Valor de $d: ';
+            var_dump($d);
+            echo '<br>';
+
+            echo 'Valor de $e: ';
+            var_dump($e); 
+            echo '<br>';
+            
+            echo 'Valor de $f: ';
+            var_dump($f);
+            echo '<br>';
     ?>
 </body>
 </html>
