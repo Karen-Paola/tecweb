@@ -122,7 +122,7 @@
             usando la función var_dump(<datos>).
             Después investiga una función de PHP que permita transformar el valor booleano de $c y $e
             en uno que se pueda mostrar con un echo: */
-            echo "<h2>Ejercicio 6: Dar y comprobar el valor booleano</h2>";
+            echo '<h2>Ejercicio 6: Dar y comprobar el valor booleano</h2>';
             $a = '0';
             $b = 'TRUE';
             $c = FALSE;
@@ -153,6 +153,25 @@
             echo 'Valor de $f: ';
             var_dump($f);
             echo '<br>';
+
+
+        //7. Usando la variable predefinida $_SERVER, determina lo siguiente:
+        //a. La versión de Apache y PHP
+        echo '<h2>Ejercicio 7: Usando $_SERVER</h2>';
+        //Versión de apache
+        $apache_version = $_SERVER['SERVER_SOFTWARE'];
+        echo 'Versión de Apache: ' . $apache_version .'<br>';
+        // Obtener la versión de PHP
+        $php_version = phpversion();
+        echo 'Versión de PHP: ' . $php_version. '<br>';
+
+        //b. El nombre del sistema operativo (servidor)
+        $server_sistema = php_uname();
+        echo 'Sistema operativo del servidor: ' . $server_sistema . '<br>';
+        
+        //c. El idioma del navegador (cliente).
+        $idioma_navegador = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+        echo 'idioma del navegador'.$idioma_navegador;
     ?>
 </body>
 </html>
