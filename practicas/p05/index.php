@@ -96,7 +96,7 @@
 
         //4. Lee y muestra los valores de las variables del ejercicio anterior, pero ahora con la ayuda de
         //la matriz $GLOBALS o del modificador global de PHP.
-        echo "<h3>Lectura de valores utilizando \$GLOBALS</h3>";
+        echo "<h2>Ejercicio 4: Lectura de valores utilizando \$GLOBALS</h2>";
         echo 'El valor de $GLOBALS["a"] es: ' . $GLOBALS['a'] . '<br>';
         echo 'El valor de $GLOBALS["b"] es: ' . $GLOBALS['b'] . '<br>';
         echo 'El valor de $GLOBALS["c"] es: ' . $GLOBALS['c'] . '<br>';
@@ -104,6 +104,22 @@
         print_r($GLOBALS['z']);
         echo '<br>';
 
+        //5. Dar el valor de las variables $a, $b, $c al final del siguiente script:
+        echo "<h2>Ejercicio 5: Dar el valor de las variables</h2>";
+        $a = '7 personas';
+        echo 'La variable $a contiene: '.$a.'<br>';
+
+        $b = (integer) $a; //Toma el 7 porque es el primer número de string
+        echo 'La variable $b contiene: '.$b.'<br>';
+
+        $a = '9E3'; 
+        echo 'La variable $a contiene: '.$a.'<br>';
+
+        $c = (double) $a; //La cadena "9E3" es notación científica en PHP y se convierte a 9000.0 (9 * 10^3) cuando se convierte a double
+        echo 'La variable $c contiene: '.$c.'<br>';
+            
+            
+            
     ?>
 </body>
 </html>
