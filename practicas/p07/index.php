@@ -16,7 +16,6 @@
     <h2>Ejercicio 2</h2>
     <p>Secuencia de números aleatorios:<p>
     <?php
-    include 'src/funciones.php';
     generarMatriz(3);
     ?>
 
