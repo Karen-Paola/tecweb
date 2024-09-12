@@ -27,6 +27,12 @@
     encontrarDoWhile($_GET['numero']);
     ?>
 
+    <h2>Ejercicio 4</h2>
+    <p>Arreglo cuyos valores son valores de la 'a' a la 'z'<p>
+    <?php
+    arr(3);
+    ?>
+
     <h2>Ejemplo de POST</h2>
     <form action="http://localhost/tecweb/practicas/p07/index.php" method="post">
         Name: <input type="text" name="name"><br>
