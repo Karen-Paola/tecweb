@@ -44,6 +44,19 @@
         <input type="submit" value="Enviar">
     </form>
 
+    <h2>Ejercicio 6 formualrio de autos</h2>
+    <h4>Consulta del Parque Vehicular</h4>
+    <form action="resultado2.php" method="post">
+        <label for="matricula">Consultar por matrícula:</label><br>
+        <input type="text" id="matricula" name="matricula" placeholder="Ingrese la matrícula"><br><br>
+        
+        <label for="todos">Consultar todos los autos:</label><br>
+        <input type="checkbox" id="todos" name="todos" value="1"><br><br>
+   
+        <input type="submit" value="Consultar">
+    </form>
+
+
     <h2>Ejemplo de POST</h2>
     <form action="http://localhost/tecweb/practicas/p07/index.php" method="post">
         Name: <input type="text" name="name"><br>
