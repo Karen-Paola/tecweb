@@ -30,8 +30,38 @@ function generarMatriz($filas) {
         echo implode(', ', $fila) . "\n";
         echo '<br>';
     }
+    $totalNumeros = $iteraciones*3;
+    echo "$totalNumeros\n números obtenidos en $iteraciones\n iteraciones";
 
-    echo "Total de iteraciones: $iteraciones\n";
 }
+
+function encontrarNum($num){
+    if (isset($num)){
+        $encontrado = false;
+
+    while(!$encontrado){
+        $numeroAleatorio = rand(1, 1000);
+        if($numeroAleatorio % $num == 0){
+            echo "El número aleatorio $numeroAleatorio es múltiplo de $num".'<br>';
+            $encontrado = true;
+        }
+    }
+    }
+}
+
+function encontrarDoWhile($num){
+    if (isset($num)){
+        $encontrado = false;
+        do {
+            $numeroAleatorio = rand(1, 1000);
+            if($numeroAleatorio % $num == 0){
+                echo 'Usando do-while <br>';
+                echo "El número aleatorio $numeroAleatorio es múltiplo de $num";
+                $encontrado = true;
+            }
+        } while (!$encontrado);
+    }
+}
+
 ?>
 
