@@ -1,17 +1,12 @@
 <?php
 function esMultiploDe5Y7($numero) {
-    if(isset($_GET['numero']))
-        {
-            $num = $numero;
-            if ($num%5==0 && $num%7==0)
-            {
-                echo '<h3>R= El número '.$num.' SÍ es múltiplo de 5 y 7.</h3>';
-            }
-            else
-            {
-                echo '<h3>R= El número '.$num.' NO es múltiplo de 5 y 7.</h3>';
-            }
+    if(isset($numero)) {
+        if ($numero % 5 == 0 && $numero % 7 == 0) {
+            echo '<h3>R= El número '.$numero.' SÍ es múltiplo de 5 y 7.</h3>';
+        } else {
+            echo '<h3>R= El número '.$numero.' NO es múltiplo de 5 y 7.</h3>';
         }
+    }
 }
 
 function generarMatriz($filas) {
@@ -38,7 +33,5 @@ function generarMatriz($filas) {
 
     echo "Total de iteraciones: $iteraciones\n";
 }
-
-// Llamamos a la función con el número de filas deseado
-generarMatriz(4);
 ?>
+
