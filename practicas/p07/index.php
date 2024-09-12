@@ -14,9 +14,17 @@
     ?>
 
     <h2>Ejercicio 2</h2>
-    <p>Secuencia de números aleatorios:<p>
+    <p>Secuencia de números aleatorios<p>
     <?php
     generarMatriz(3);
+    ?>
+
+    <h2>Ejercicio 3</h2>
+    <p>Utiliza un ciclo while para encontrar el primer número entero obtenido aleatoriamente, 
+    pero que además sea múltiplo de un número dado.<p>
+    <?php
+    encontrarNum($_GET['numero']);
+    encontrarDoWhile($_GET['numero']);
     ?>
 
     <h2>Ejemplo de POST</h2>
