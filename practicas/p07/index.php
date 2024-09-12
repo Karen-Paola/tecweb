@@ -33,12 +33,23 @@
     arr(3);
     ?>
 
+    <h2>Ejercicio 5 formulario</h2>
+    <form action="resultado.php" method="post"> 
+        Edad: <input type="number" name="edad"><br>
+        Sexo:
+        <select name="sexo" required>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+        </select><br><br>
+        <input type="submit" value="Enviar">
+    </form>
+
     <h2>Ejemplo de POST</h2>
     <form action="http://localhost/tecweb/practicas/p07/index.php" method="post">
         Name: <input type="text" name="name"><br>
         E-mail: <input type="text" name="email"><br>
         <input type="submit">
-    </form>
+    </form> 
     <br>
     <?php
         if(isset($_POST["name"]) && isset($_POST["email"]))
@@ -48,5 +59,6 @@
             echo $_POST["email"];
         }
     ?>
+
 </body>
 </html>
