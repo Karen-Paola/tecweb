@@ -63,5 +63,22 @@ function encontrarDoWhile($num){
     }
 }
 
+function arr(){
+    $arrNum = array();
+    for ($i = 97; $i <=122; $i++){
+        $arreglo[$i] = chr($i);
+    }
+    echo "<table border='1'>"; // Abre la tabla
+
+    foreach ($arreglo as $key => $value) {
+        echo "<tr>"; // Se hace una fila
+        echo "<td>$key</td>"; // Imprime el índice
+        echo "<td>$value</td>"; // Imprime la letra
+        echo "</tr>"; // Cierra la fila
+    }
+
+    echo "</table>";
+}
+
 ?>
 
