@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Manejo de variables</title>
 </head>
 <body>
@@ -31,7 +31,7 @@
         echo '<li>La variable $house*5 no es válida. Contiene un * que es un carácter especial y no está 
               permitido en los nombres de variables en PHP.</li>';
         echo '</ul>';
-        echo '<br>';
+        echo '<div>Contenido adicional...</div>';
 
 
         /**2. Proporcionar los valores de $a, $b, $c como sigue:
