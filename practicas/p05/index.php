@@ -63,12 +63,12 @@
         echo "<h2>Ejercicio 3: Contenido de las variables</h2>";
 
         //Definicion de variables
-        $a = "PHP5";
-        echo '<p>Valor de $a= '.$a.'</p>';
+        $a = 'PHP5';
+        echo '<p>El valor de $a es:'.$a.'</p>';
 
         $z[] = &$a;
-        echo '<p>Valor de $z[]=';
-        print_r($z);
+        echo '<p>';
+        print_r($z); // Para mostrar todos los valores del arreglo
         echo '</p>';
 
         $b = "5a version de PHP";
@@ -89,15 +89,6 @@
         echo '<p>Valor de $z[]=';
         var_dump($z);
         echo '</p>';
-
-        //Liberar variables del ejercicio 3
-        unset($a);
-        unset($z);
-        unset($b);
-        unset($b_numeric);
-        unset($c);
-
-
 
         //4. Lee y muestra los valores de las variables del ejercicio anterior, pero ahora con la ayuda de
         //la matriz $GLOBALS o del modificador global de PHP.
