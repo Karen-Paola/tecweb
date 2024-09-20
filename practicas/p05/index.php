@@ -66,37 +66,42 @@
         echo '<p>El valor de $a es:'.$a.'</p>';
 
         $z[] = &$a;
-        echo '<pre>';
+        echo '<p>';
         print_r($z); // Para mostrar todos los valores del arreglo
-        echo '</pre>';
+        echo '</p>';
 
         $b = '5a version de PHP';
-        echo '<p>El valor de $b es:'.$b.'</p>';
 
-        $c = $b*10;
+        echo '<p>El valor de $b es: '.$b.'</p>';
+
+        $c = (integer)$b*10;
         echo '<p>El valor de $c es:'.$c.'</p>';
 
         $a .= $b;
         echo '<p>El valor de $a es:'.$a.'</p>';
 
-        $b *= $c;
+        $b_numeric = (int)$b;
+        $b_numeric *c;
+
+        //$b *= $c;
         echo '<p>El valor de $b es:'.$b.'</p>';
 
-        // Nuevamente, encapsulamos la salida de print_r en <pre>
         $z[0] = 'MySQL';
-        echo '<pre>';
+        echo '<p>';
         print_r($z);
-        echo '</pre>';
+        echo '</p>';
+
+
 
         //4. Lee y muestra los valores de las variables del ejercicio anterior, pero ahora con la ayuda de
         //la matriz $GLOBALS o del modificador global de PHP.
-        echo "<h2>Ejercicio 4: Lectura de valores utilizando \$GLOBALS</h2>";
+        echo "<h2>Ejercicio 4: Lectura de valores utilizando GLOBALS</h2>";
         echo '<p>El valor de $GLOBALS["a"] es: ' . $GLOBALS['a'] . '</p>';
         echo '<p>El valor de $GLOBALS["b"] es: ' . $GLOBALS['b'] . '</p>';
         echo '<p>El valor de $GLOBALS["c"] es: ' . $GLOBALS['c'] . '</p>';
         echo '<p>Contenido de $GLOBALS["z"]: ';
         print_r($GLOBALS['z']);
-        echo '<br />';
+
 
         //5. Dar el valor de las variables $a, $b, $c al final del siguiente script:
         echo '<h3>Ejercicio 5: Dar el valor de las variables</h3>';
