@@ -86,9 +86,14 @@
         echo '<p>Valor de $b= '.$b.'</p>';
 
         $z[0] = "MySQL";
-        echo '<p>Valor de $z[]=';
+        echo '<p>Valor de $z[]= ';
+        ob_start();
         var_dump($z);
+        $z_output = ob_get_clean();
+        $z_output_escaped = htmlspecialchars($z_output);
+        echo $z_output_escaped;
         echo '</p>';
+
 
         //4. Lee y muestra los valores de las variables del ejercicio anterior, pero ahora con la ayuda de
         //la matriz $GLOBALS o del modificador global de PHP.
@@ -98,30 +103,55 @@
         echo '<p>El valor de $GLOBALS["c"] es: ' . $GLOBALS['c'] . '</p>';
         echo '<p>Contenido de $GLOBALS["z"]: ';
         print_r($GLOBALS['z']);
+        echo '</p>';
 
 
         //5. Dar el valor de las variables $a, $b, $c al final del siguiente script:
-        echo '<h3>Ejercicio 5: Dar el valor de las variables</h3>';
-        $a = '7 personas';
-        echo 'La variable $a contiene: '.$a;
-        echo '<br />';
+       // echo '<h2>Ejercicio 5: Dar el valor de las variables</h2>';
+        
 
-        $b = (integer) $a; //Toma el 7 porque es el primer número de string
-        echo 'La variable $b contiene: '.$b;
-        echo '<br />';
+        /*echo '<h3>Ejercicio 5: Dar el valor de las variables</h3>';
+        echo '<p>La variable $a contiene: '.$a.'</p>';
+        echo '<p>La variable $b contiene: '.$b.'</p>';
+        echo '<p>La variable $a contiene: '.$a.'</p>';
+        echo '<p>La variable $c contiene: '.$c.'</p>';*/
 
-        $a = '9E3'; 
-        echo 'La variable $a contiene: '.$a;
-        echo '<br />';
+        $a = '7 personas';  // Cadena de texto
+        $b = (integer) $a;  // Se convierte a entero, tomando solo el '7'
 
-        $c = (double) $a; //La cadena "9E3" es notación científica en PHP y se convierte a 9000.0 (9 * 10^3) cuando se convierte a double
-        echo 'La variable $c contiene: '.$c;
+        $a = '9E3';  // Nueva cadena en notación científica
+        $c = (double) $a;  // Se convierte a 9000.0 (9 * 10^3)
+
+        echo '<h2>Ejercicio 5: Dar el valor de las variables</h2>';
+        echo '<ul>';  // Iniciamos la lista
+        echo '<li>La variable $a contiene: ' . htmlspecialchars($a) . '</li>';
+        echo '<li>La variable $b contiene: ' . $b . '</li>';
+        echo '<li>La variable $c contiene: ' . $c . '</li>';
+        echo '</ul>';
+
+        echo '<h2>Ejercicio 6: Dar y comprobar el valor booleano</h2>';
+        $a = '0';
+        $b = 'TRUE';
+        $c = FALSE;
+        $d = ($a OR $b);
+        $e = ($a AND $c);
+        $f = ($a XOR $b); 
+
+        echo '<ul>';
+        echo '<li>Valor de $a: ' . var_export((bool)$a, true) . '</li>';
+        echo '<li>Valor de $b: ' . var_export((bool)$b, true) . '</li>';
+        echo '<li>Valor de $c: ' . var_export($c, true) . '</li>';
+        echo '<li>Valor de $d: ' . var_export($d, true) . '</li>';
+        echo '<li>Valor de $e: ' . var_export($e, true) . '</li>';
+        echo '<li>Valor de $f: ' . var_export($f, true) . '</li>';
+        echo '</ul>';
+
             
         /**6. Dar y comprobar el valor booleano de las variables $a, $b, $c, $d, $e y $f y muéstralas
             usando la función var_dump(<datos>).
             Después investiga una función de PHP que permita transformar el valor booleano de $c y $e
             en uno que se pueda mostrar con un echo: */
-        echo '<h2>Ejercicio 6: Dar y comprobar el valor booleano</h2>';
+        /*echo '<h2>Ejercicio 6: Dar y comprobar el valor booleano</h2>';
         $a = '0';
         $b = 'TRUE';
         $c = FALSE;
@@ -150,28 +180,30 @@
         echo '<br />';
         
         echo 'Valor de $f: ';
-        var_dump($f);
+        var_dump($f);*/
 
         //7. Usando la variable predefinida $_SERVER, determina lo siguiente:
-        //a. La versión de Apache y PHP
         echo '<h2>Ejercicio 7: Usando $_SERVER</h2>';
-        //Versión de apache
+        echo '<ul>';  // Iniciamos una lista para mejorar la presentación
+
+        // Versión de Apache
         $apache_version = $_SERVER['SERVER_SOFTWARE'];
-        echo 'Versión de Apache: ' . $apache_version;
-        echo '<br />';
+        echo '<li>Versión de Apache: ' . htmlspecialchars($apache_version) . '</li>';
+
         // Obtener la versión de PHP
         $php_version = phpversion();
-        echo 'Versión de PHP: ' . $php_version;
-        echo '<br />';
-        //b. El nombre del sistema operativo (servidor)
+        echo '<li>Versión de PHP: ' . htmlspecialchars($php_version) . '</li>';
+
+        // b. El nombre del sistema operativo (servidor)
         $server_sistema = php_uname();
-        echo 'Sistema operativo del servidor: ' . $server_sistema;
-        echo '<br />';
-        
-        //c. El idioma del navegador (cliente).
+        echo '<li>Sistema operativo del servidor: ' . htmlspecialchars($server_sistema) . '</li>';
+
+        // c. El idioma del navegador (cliente)
         $idioma_navegador = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-        echo 'Idioma del navegador: '.$idioma_navegador;
-        echo '<br />';
+        echo '<li>Idioma del navegador: ' . htmlspecialchars($idioma_navegador) . '</li>';
+
+        echo '</ul>';
+        
     ?>
 </body>
 </html>
