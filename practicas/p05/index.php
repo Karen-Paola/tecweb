@@ -62,34 +62,40 @@
         arreglo): */
         echo "<h2>Ejercicio 3: Contenido de las variables</h2>";
 
-        $a = 'PHP5';
-        echo '<p>El valor de $a es:'.$a.'</p>';
+        //Definicion de variables
+        $a = "PHP5";
+        echo '<p>Valor de $a= '.$a.'</p>';
 
         $z[] = &$a;
-        echo '<p>';
-        print_r($z); // Para mostrar todos los valores del arreglo
-        echo '</p>';
-
-        $b = '5a version de PHP';
-
-        echo '<p>El valor de $b es: '.$b.'</p>';
-
-        $c = (integer)$b*10;
-        echo '<p>El valor de $c es:'.$c.'</p>';
-
-        $a .= $b;
-        echo '<p>El valor de $a es:'.$a.'</p>';
-
-        $b_numeric = (int)$b;
-        $b_numeric *c;
-
-        //$b *= $c;
-        echo '<p>El valor de $b es:'.$b.'</p>';
-
-        $z[0] = 'MySQL';
-        echo '<p>';
+        echo '<p>Valor de $z[]=';
         print_r($z);
         echo '</p>';
+
+        $b = "5a version de PHP";
+        echo '<p>Valor de $b= '.$b.'</p>';         
+
+        $c = (integer)$b * 10;
+        echo '<p>Valor de $c= '.$c.'</p>';
+
+        $a .= $b;
+        echo '<p>Valor de $a= '.$a.'</p>';
+
+        $b_numeric = (int) $b;
+        $b_numeric *= $c;
+        //$b *= $c;
+        echo '<p>Valor de $b= '.$b.'</p>';
+
+        $z[0] = "MySQL";
+        echo '<p>Valor de $z[]=';
+        var_dump($z);
+        echo '</p>';
+
+        //Liberar variables del ejercicio 3
+        unset($a);
+        unset($z);
+        unset($b);
+        unset($b_numeric);
+        unset($c);
 
 
 
