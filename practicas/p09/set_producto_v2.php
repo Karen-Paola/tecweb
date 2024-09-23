@@ -36,8 +36,11 @@ if ($result_check->num_rows > 0) {
 }
 
 // Si no existe, proceder a insertar los datos
+/*$sql_insert = "INSERT INTO productos (nombre, marca, modelo, precio, detalles, unidades, imagen, eliminado) 
+               VALUES (?, ?, ?, ?, ?, ?, ?, 0)";*/
+
 $sql_insert = "INSERT INTO productos (nombre, marca, modelo, precio, detalles, unidades, imagen, eliminado) 
-               VALUES (?, ?, ?, ?, ?, ?, ?)";
+               VALUES (?, ?, ?, ?, ?, ?, ?, 0)";
 
 // Preparar la sentencia
 $stmt_insert = $link->prepare($sql_insert);
