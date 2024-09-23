@@ -36,7 +36,7 @@ if ($result_check->num_rows > 0) {
 }
 
 // Si no existe, proceder a insertar los datos
-$sql_insert = "INSERT INTO productos (nombre, marca, modelo, precio, detalles, unidades, imagen) 
+$sql_insert = "INSERT INTO productos (nombre, marca, modelo, precio, detalles, unidades, imagen, eliminado) 
                VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 // Preparar la sentencia
@@ -58,6 +58,7 @@ if ($stmt_insert->execute()) {
     echo "<p><strong>Detalles:</strong> {$detalles}</p>";
     echo "<p><strong>Unidades:</strong> {$unidades}</p>";
     echo "<p><strong>Imagen:</strong> {$imagen}</p>";
+    echo "<p><strong>Eliminado:</strong> 0 (No eliminado)</p>";
 } else {
     // Mostrar mensaje de error si la inserción falla
     echo "<p>Error: No se pudo insertar el producto. Por favor, inténtelo de nuevo.</p>";
