@@ -49,11 +49,7 @@
                         <td><?= htmlspecialchars($producto['precio']) ?></td>
                         <td><?= htmlspecialchars($producto['unidades']) ?></td>
                         <td><?= htmlspecialchars(utf8_encode($producto['detalles'])) ?></td>
-                        <td>
-                    <img src="../p08/img/<?= htmlspecialchars($producto['imagen']) ?>" 
-                     alt="Imagen de <?= htmlspecialchars($producto['nombre']) ?>" 
-                     style="width:100px;" />
-            </td>
+                        <td><img src="<?= htmlspecialchars($producto['imagen']) ?>" alt="Imagen de <?= htmlspecialchars($producto['nombre']) ?>" style="width:100px;" /></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
