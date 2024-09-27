@@ -312,6 +312,7 @@ function ej15(){
     var result = mostrarMensaje() + mostrarMensaje() + mostrarMensaje();
     var div15 = document.getElementById('ej15');
     div15.innerHTML = result;
+}
 
 function ej16(){
     /*function mostrarRango(x1,x2) {
@@ -346,6 +347,28 @@ function ej16(){
 
 function ej17(){
     function convertirCastellano(x) {
+        if (x == 1)
+            return 'uno';
+        else if (x == 2)
+            return 'dos';
+        else if (x == 3)
+            return 'tres';
+        else if (x == 4)
+            return 'cuatro';
+        else if (x == 5)
+            return 'cinco';
+        else
+            return 'valor incorrecto';
+    }
+    var valor = prompt('Ingresa un valor entre 1 y 5:', '');
+    valor = parseInt(valor);
+    var resultado = convertirCastellano(valor);
+    var div17 = document.getElementById('ej17');
+    div17.innerHTML = resultado;
+}
+
+function ej18(){
+    function convertirCastellano(x) {
         switch (x) {
             case 1: return 'uno';
             case 2: return 'dos';
@@ -355,33 +378,9 @@ function ej17(){
             default: return 'valor incorrecto';
         }
     }
-
     var valor = prompt('Ingresa un valor entre 1 y 5:', '');
     valor = parseInt(valor);
-    if (isNaN(valor) || valor < 1 || valor > 5) {
-        var resultado = 'valor incorrecto';
-    } else {
-        var resultado = convertirCastellano(valor);
-    }
-    var div17 = document.getElementById('ej17');
-    div17.innerHTML = resultado;
-}
-
-function ej18(){
-    var x = prompt('Ingresa un valor entre 1 y 5:', '');
-    x = parseInt(x);
-    var result;
-    if (isNaN(x) || x < 1 || x > 5) {
-        result = 'valor incorrecto';
-    } else {
-        switch (x) {
-            case 1: result = 'uno'; break;
-            case 2: result = 'dos'; break;
-            case 3: result = 'tres'; break;
-            case 4: result = 'cuatro'; break;
-            case 5: result = 'cinco'; break;
-        }
-    }
+    var resultado = convertirCastellano(valor);
     var div18 = document.getElementById('ej18');
-    div18.innerHTML = result;   
+    div18.innerHTML = resultado;   
 }
