@@ -16,6 +16,27 @@ $detalles = isset($_POST['detalles']) ? trim($_POST['detalles']) : '';
 $unidades = isset($_POST['unidades']) ? (int)$_POST['unidades'] : 0;
 $imagen  = isset($_POST['imagen']) ? trim($_POST['imagen']) : '';
 
+
+// Manejo de la imagen
+$imagen = '';
+if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+    // Obtener el nombre del archivo de la imagen
+    $nombreImagen = basename($_FILES['imagen']['name']);
+    $target_dir = "img/"; // La carpeta donde se guardarán las imágenes
+    $target_file = $target_dir . $nombreImagen;
+
+    // Mover la imagen a la carpeta deseada
+    if (move_uploaded_file($_FILES['imagen']['tmp_name'], $target_file)) {
+        $imagen = './' . $target_file; // Guardar la ruta relativa de la imagen
+    } else {
+        die('<p>Error al subir la imagen.</p>');
+    }
+} else {
+    // Puedes asignar una imagen predeterminada si no se sube ninguna
+    $imagen = './img/img.png'; // Ruta de la imagen predeterminada
+}
+
+
 // Validar que los campos obligatorios no estén vacíos
 /*if (empty($nombre) || empty($marca) || empty($modelo)) {
     die('<p>Error: Todos los campos (nombre, marca, modelo) son obligatorios.</p>');
