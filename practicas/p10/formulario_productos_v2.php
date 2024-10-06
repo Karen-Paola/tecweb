@@ -73,31 +73,15 @@
   <body>
     <h1>Registro de productos</h1>
 
-    <form id="formularioProductos" action="http://localhost/tecweb/practicas/p09/set_producto_v2.php" method="post"  enctype="multipart/form-data" onsubmit="return validarFormulario()">
+    <form id="formularioProductos" action="http://localhost/tecweb/practicas/p10/update_producto.php" method="post"  enctype="multipart/form-data" onsubmit="return validarFormulario()">
 
     <fieldset>
         <legend>Información del Producto</legend>
         <ul>
-            <!--<li><label for="nombre">Nombre:</label> <input type="text" name="nombre" id="nombre"></li>
-
-            <li>
-              <label for="marca">Marca:</label>
-              <select name="marca" id="marca">
-                <option value="">Seleccione una marca</option>
-                <option value="Sweet">Sweet</option>
-                <option value="La Tartería">La Tartería</option>
-                <option value="Cookie Heaven">Cookie Heaven</option>
-                <option value="Sweet Delights">Sweet Delights</option>
-              </select>
-            </li>
-
-            <li><label for="modelo">Modelo:</label> <input type="text" name="modelo" id="modelo"></li>
-            <li><label for="precio">Precio:</label> <input type="number" step="0.01" name="precio" id="precio"></li>
-            <li><label for="detalles">Detalles:</label> <textarea name="detalles" id="detalles" rows="4" placeholder="Descripción del producto"></textarea></li>
-            <li><label for="unidades">Unidades:</label><input type="number" name="unidades" id="unidades"></li>
-            <li><label for="form-imagen">Ruta de la Imagen:</label> <input type="text" name="imagen" id="form-imagen" placeholder="http://localhost/tecweb/practicas/p09/img/img.png"></li-->
-        
-              <li><label for="form-name">Nombre:</label> <input type="text" name="name" id="form-name" value="<?= !empty($_POST['nombre'])?$_POST['nombre']:$_GET['nombre'] ?>"></li>
+              <li><label for="form-id">ID:</label><input type="hidden" name="id" id="form-id" value="<?= isset($_POST['id']) ? htmlspecialchars($_POST['id']) : '' ?>"></li>
+              <!--<li><label for="form-name">Nombre:</label> <input type="text" name="name" id="form-name" value="
+              <!-?= !empty($_POST['nombre'])?$_POST['nombre']:$_GET['nombre'] ?>"></li-->
+              <li><label for="form-name">Nombre:</label><input type="text" name="nombre" id="form-name"value="<?= isset($_POST['nombre']) ? htmlspecialchars($_POST['nombre']) : (isset($_GET['nombre']) ? htmlspecialchars($_GET['nombre']) : '') ?>"></li>
               <li>
                     <label for="marca">Marca:</label>
                     <select name="marca" id="marca">

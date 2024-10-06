@@ -1,8 +1,8 @@
 <?php
 
         // Obtener los valores del formulario
-    if (isset($_POST['idp'])) {
-        $id = $_POST['idp'];
+    if (isset($_POST['id'])) {
+        $id = $_POST['id'];
     } else {
         die('Error: No se recibió el ID del producto.');
     }
@@ -31,7 +31,7 @@
         $tmpImagen = $_FILES['imagen']['tmp_name'];
         
         // Mover la imagen a un directorio en el servidor
-        $uploadDir = '../p08/img/'; // Carpeta donde se almacenarán las imágenes
+        $uploadDir = '../p09/img/'; // Carpeta donde se almacenarán las imágenes
         $rutaImagen = $uploadDir . basename($nombreImagen);
 
         // Intentar mover el archivo subido al directorio de destino
