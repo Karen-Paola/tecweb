@@ -98,7 +98,18 @@
             <li><label for="form-imagen">Ruta de la Imagen:</label> <input type="text" name="imagen" id="form-imagen" placeholder="http://localhost/tecweb/practicas/p09/img/img.png"></li-->
         
               <li><label for="form-name">Nombre:</label> <input type="text" name="name" id="form-name" value="<?= !empty($_POST['nombre'])?$_POST['nombre']:$_GET['nombre'] ?>"></li>
-              <li><label for="form-brand">Marca:</label> <input type="text" name="marca" id="form-brand" value="<?= !empty($_POST['marca'])?$_POST['marca']:$_GET['marca'] ?>"></li>
+              <li>
+                    <label for="marca">Marca:</label>
+                    <select name="marca" id="marca">
+                        <option value="">Seleccione una marca</option>
+                        <option value="Sweet" <?= !empty($_POST['marca']) && $_POST['marca'] == 'Sweet' ? 'selected' : '' ?>>Sweet</option>
+                        <option value="La Tartería" <?= !empty($_POST['marca']) && $_POST['marca'] == 'La Tartería' ? 'selected' : '' ?>>La Tartería</option>
+                        <option value="Cookie Heaven" <?= !empty($_POST['marca']) && $_POST['marca'] == 'Cookie Heaven' ? 'selected' : '' ?>>Cookie Heaven</option>
+                        <option value="Sweet Delights" <?= !empty($_POST['marca']) && $_POST['marca'] == 'Sweet Delights' ? 'selected' : '' ?>>Sweet Delights</option>
+                    </select>
+                </li>
+              <!--<li><label for="form-brand">Marca:</label> <input type="text" name="marca" id="form-brand" value="
+              <!-?= !empty($_POST['marca'])?$_POST['marca']:$_GET['marca'] ?>"></li-->
               <li><label for="form-model">Modelo:</label> <input type="text" name="modelo" id="form-model" value="<?= !empty($_POST['modelo'])?$_POST['modelo']:$_GET['modelo'] ?>"></li>
               <li><label for="form-price">Precio:</label> <input type="number" name="precio" id="form-price" value="<?= !empty($_POST['precio'])?$_POST['precio']:$_GET['precio'] ?>"></li>
               <li><label for="form-units">Unidades:</label> <input type="number" name="unidades" id="form-units" value="<?= !empty($_POST['unidades'])?$_POST['unidades']:$_GET['unidades'] ?>"></li>
