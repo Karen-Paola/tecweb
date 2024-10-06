@@ -18,21 +18,8 @@ $imagen  = isset($_POST['imagen']) ? trim($_POST['imagen']) : '';
 
 
 // Manejo de la imagen
-$imagen = '';
-if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-    // Obtener el nombre del archivo de la imagen
-    $nombreImagen = basename($_FILES['imagen']['name']);
-    $target_dir = "img/"; // La carpeta donde se guardarán las imágenes
-    $target_file = $target_dir . $nombreImagen;
-
-    // Mover la imagen a la carpeta deseada
-    if (move_uploaded_file($_FILES['imagen']['tmp_name'], $target_file)) {
-        $imagen = './' . $target_file; // Guardar la ruta relativa de la imagen
-    } else {
-        die('<p>Error al subir la imagen.</p>');
-    }
-} else {
-    // Puedes asignar una imagen predeterminada si no se sube ninguna
+// Si no se proporciona una ruta de imagen, asignar una predeterminada
+if (empty($imagen)) {
     $imagen = './img/img.png'; // Ruta de la imagen predeterminada
 }
 
