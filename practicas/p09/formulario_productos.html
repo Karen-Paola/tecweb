@@ -9,6 +9,64 @@
       list-style-type: none;
       }
     </style>
+
+    <script>
+      // Validaciones con JavaScript
+
+      function validarFormulario() {
+        // Validación del nombre
+        const nombre = document.getElementById('nombre').value;
+        if (!nombre || nombre.length > 100) {
+          alert('El nombre es requerido y debe tener 100 caracteres o menos.');
+          return false;
+        }
+
+        // Validación de la marca
+        const marca = document.getElementById('marca').value;
+        if (!marca) {
+          alert('La marca es requerida.');
+          return false;
+        }
+
+        // Validación del modelo
+        const modelo = document.getElementById('modelo').value;
+        const modeloRegex = /^[a-zA-Z0-9]+$/; // Solo alfanumérico
+        if (!modelo || !modeloRegex.test(modelo) || modelo.length > 25) {
+          alert('El modelo es requerido, debe ser alfanumérico y tener 25 caracteres o menos.');
+          return false;
+        }
+
+        // Validación del precio
+        const precio = parseFloat(document.getElementById('precio').value);
+        if (isNaN(precio) || precio <= 99.99) {
+          alert('El precio es requerido y debe ser mayor a 99.99.');
+          return false;
+        }
+
+        // Validación de los detalles (opcional, pero máximo 250 caracteres)
+        const detalles = document.getElementById('detalles').value;
+        if (detalles && detalles.length > 250) {
+          alert('Los detalles deben tener 250 caracteres o menos.');
+          return false;
+        }
+
+        // Validación de las unidades
+        const unidades = parseInt(document.getElementById('unidades').value);
+        if (isNaN(unidades) || unidades < 0) {
+          alert('Las unidades son requeridas y deben ser un número mayor o igual a 0.');
+          return false;
+        }
+
+        // Validación de la imagen
+        const imagen = document.getElementById('form-imagen').value;
+        if (!imagen) {
+          document.getElementById('form-imagen').value = 'http://localhost/tecweb/practicas/p09/img/img.png';
+        }
+
+        return true; // Si todas las validaciones pasan
+      }
+    </script>
+
   </head>
 
   <body>
