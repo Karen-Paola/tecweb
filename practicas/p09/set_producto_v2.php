@@ -16,10 +16,18 @@ $detalles = isset($_POST['detalles']) ? trim($_POST['detalles']) : '';
 $unidades = isset($_POST['unidades']) ? (int)$_POST['unidades'] : 0;
 $imagen  = isset($_POST['imagen']) ? trim($_POST['imagen']) : '';
 
-// Validar que los campos obligatorios no estén vacíos
-if (empty($nombre) || empty($marca) || empty($modelo)) {
-    die('<p>Error: Todos los campos (nombre, marca, modelo) son obligatorios.</p>');
+
+// Manejo de la imagen
+// Si no se proporciona una ruta de imagen, asignar una predeterminada
+if (empty($imagen)) {
+    $imagen = './img/img.png'; // Ruta de la imagen predeterminada
 }
+
+
+// Validar que los campos obligatorios no estén vacíos
+/*if (empty($nombre) || empty($marca) || empty($modelo)) {
+    die('<p>Error: Todos los campos (nombre, marca, modelo) son obligatorios.</p>');
+}*/
 
 // Preparar la consulta para verificar si ya existe el producto
 $sql_check = "SELECT * FROM productos WHERE nombre = ? AND marca = ? AND modelo = ?";
@@ -66,6 +74,8 @@ if ($stmt_insert->execute()) {
     // Mostrar mensaje de error si la inserción falla
     echo "<p>Error: No se pudo insertar el producto. Por favor, inténtelo de nuevo.</p>";
 }
+
+
 
 // Cerrar la conexión y liberar recursos
 $stmt_check->close();
