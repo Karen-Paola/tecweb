@@ -75,6 +75,8 @@ if ($stmt_insert->execute()) {
     echo "<p>Error: No se pudo insertar el producto. Por favor, inténtelo de nuevo.</p>";
 }
 
+
+
 // Cerrar la conexión y liberar recursos
 $stmt_check->close();
 $stmt_insert->close();
