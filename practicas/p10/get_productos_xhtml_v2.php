@@ -19,7 +19,6 @@
             $productos = $result->fetch_all(MYSQLI_ASSOC);
             $result->free();
         }
-
         // Cerramos la conexión
         $link->close();
     }
