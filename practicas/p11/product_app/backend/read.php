@@ -5,7 +5,7 @@
     $data = array();
 
     
-    // SE VERIFICA HABER RECIBIDO EL PARAMTRO A BUSCAR
+    // SE VERIFICA HABER RECIBIDO EL PARAMeTRO A BUSCAR
     if( isset($_POST['busqueda']) ) {
         $busqueda = $_POST['busqueda'];
         // SE ESCAPA EL TÉRMINO PARA EVITAR INYECCIÓN SQL
