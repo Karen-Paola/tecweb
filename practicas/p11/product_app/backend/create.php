@@ -7,33 +7,37 @@
         // SE TRANSFORMA EL STRING DEL JASON A OBJETO
         $jsonOBJ = json_decode($producto);
         $nombre = utf8_decode($jsonOBJ->nombre);
-        $precio = (float)$jsonOBJ->precio; // Asegúrate de que sea un float
-        $unidades = (int)$jsonOBJ->unidades; // Asegúrate de que sea un int
+        $precio = (float)$jsonOBJ->precio;
+        $unidades = (int)$jsonOBJ->unidades;
         $modelo = utf8_decode($jsonOBJ->modelo);
         $marca = utf8_decode($jsonOBJ->marca);
         $detalles = utf8_decode($jsonOBJ->detalles);
         $imagen = $jsonOBJ->imagen;
     
-        // SE PREPARA LA CONSULTA
-        $sql = "INSERT INTO productos (nombre, precio, unidades, modelo, marca, detalles, imagen)
-                VALUES (?, ?, ?, ?, ?, ?, ?)";
-    
-        if ($stmt = $conexion->prepare($sql)) {
-            // BIND PARAMS
+        // VALIDAR SI YA EXISTE EL PRODUCTO (nombre y eliminado = 0)
+        $sql = "SELECT 1 FROM productos WHERE nombre = ? AND eliminado = 0";
+        $stmt = $conexion->prepare($sql);
+        $stmt->bind_param('s', $nombre);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            echo json_encode(["error" => "El producto ya existe."]);
+        } else {
+            // INSERTAR EL PRODUCTO
+            $sql = "INSERT INTO productos (nombre, precio, unidades, modelo, marca, detalles, imagen)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conexion->prepare($sql);
             $stmt->bind_param('sdissss', $nombre, $precio, $unidades, $modelo, $marca, $detalles, $imagen);
-    
-            // SE EJECUTA LA CONSULTA
+
             if ($stmt->execute()) {
                 echo json_encode(["mensaje" => "Producto agregado exitosamente."]);
             } else {
-                echo json_encode(["error" => "Error al agregar el producto: " . $stmt->error]);
+                echo json_encode(["error" => "Error al agregar el producto."]);
             }
-    
-            $stmt->close();
-        } else {
-            echo json_encode(["error" => "Error en la preparación de la consulta: " . $conexion->error]);
         }
-    
+
+        $stmt->close();
         $conexion->close();
     } else {
         echo json_encode(["error" => "No se recibieron datos."]);
