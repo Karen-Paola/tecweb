@@ -19,8 +19,7 @@
         <ul class="navbar-nav ml-auto"></ul>
           <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" name="search" id="search" type="search" placeholder="ID, marca o descripción" aria-label="Search">
-            <!--button class="btn btn-success my-2 my-sm-0" type="submit" onclick="buscarProducto(event)">Buscar</button-->
-            <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-success my-2 my-sm-0" type="button">Buscar</button>
           </form>
       </div>
     </nav>
@@ -39,10 +38,9 @@
                   <textarea class="form-control" id="description" cols="30" rows="10" placeholder="JSON de producto"></textarea>
                 </div>
                 <input type="hidden" id="productId">
-                <!--button class="btn btn-primary btn-block text-center" type="submit" onclick="agregarProducto(event)">
+                <button class="btn btn-primary btn-block text-center" type="submit">
                   Agregar Producto
-                </button-->
-                <button type="submit" class="btn btn-primary btn-block text-center"></button>
+                </button>
               </form>
             </div>
           </div>
@@ -50,7 +48,7 @@
 
         <!-- TABLA  -->
         <div class="col-md-7">
-          <div class="card my-4 d-none" id="product-result">
+          <div class="card my-4 " id="product-result">
             <div class="card-body">
               <!-- RESULTADO -->
               <ul id="container"></ul>

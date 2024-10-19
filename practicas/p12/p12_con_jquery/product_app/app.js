@@ -31,28 +31,56 @@ $(document).ready(function() {
   
     // Evento de búsqueda al teclear
     $('#search').keyup(function(e) {
-      if ($('#search').val()) {
-        let search = $('#search').val();
-        $.ajax({
-          url: 'backend/product-search.php', 
-          data: {search},
-          type: 'POST',
-          success: function(response) {
-            if(!response.error) {
-                let products = JSON.parse(response);
-                let template = '';
-                products.forEach(task => {
-                  template += `
-                         <li><a href="#" class="task-item">${products.name}</a></li>
-                        ` 
-                });
-                $('#product-result').show();
-                $('#container').html(template);
-              }
-            } 
-          })
+        let search = $('#search').val(); // Obtener el valor de búsqueda
+
+        console.log("Buscando:", search); // Imprimir en consola para depuración
+
+        if (search) {
+            $.ajax({
+                url: 'backend/product-search.php',
+                type: 'GET',
+                data: { search },
+                success: function(response) {
+                    console.log("Respuesta del servidor:", response); // Mostrar respuesta
+                    try {
+                        let products = JSON.parse(response); // Parsear respuesta JSON
+                        let template = '';
+
+                        // Verificar si hay productos y crear la plantilla
+                        if (products.length > 0) {
+                            products.forEach(product => {
+                                template += `
+                                    <li>
+                                        <strong>${product.nombre}</strong><br>
+                                        Precio: ${product.precio}<br>
+                                        Unidades: ${product.unidades}<br>
+                                        Modelo: ${product.modelo}<br>
+                                        Marca: ${product.marca}<br>
+                                        Detalles: ${product.detalles}<br>
+                                        <hr>
+                                    </li>
+                                `;
+                            });
+                            $('#product-result').show(); // Mostrar resultados
+                            $('#container').html(template); // Mostrar productos en el contenedor
+                            $('#products').hide(); // Ocultar tabla de productos
+                        } else {
+                            $('#product-result').hide(); // Ocultar si no hay productos
+                            $('#products').show(); // Mostrar tabla de productos
+                        }
+                    } catch (error) {
+                        console.error('Error al parsear JSON:', error);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error en la búsqueda:', error);
+                }
+            });
+        } else {
+            $('#product-result').hide(); // Ocultar resultados si no hay búsqueda
+            $('#products').show(); // Mostrar la tabla de productos
         }
-      });
+    });
 
 // Función para validar el producto
 function validarProducto(producto) {
