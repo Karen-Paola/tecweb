@@ -76,7 +76,7 @@ function listarProductos() {
 function buscarProducto(e) {
     /**
      * Revisar la siguiente información para entender porqué usar event.preventDefault();
-     * http://qbit.com.mx/blog/2013/01/07/la-diferencia-entre-return-false-preventdefault-y-stoppropagation-en-jquery/#:~:text=PreventDefault()%20se%20utiliza%20para,escuche%20a%20trav%C3%A9s%20del%20DOM
+     * {}}
      * https://www.geeksforgeeks.org/when-to-use-preventdefault-vs-return-false-in-javascript/
      */
     e.preventDefault();
@@ -143,6 +143,67 @@ function buscarProducto(e) {
     client.send();
 }
 
+// FUNCIÓN PARA VALIDAR EL PRODUCTO
+function validarProducto(producto) {
+    // Validar nombre
+    if (!producto.nombre || producto.nombre.trim() === "") {
+        alert('El nombre es requerido.');
+        return false;
+    }
+    if (producto.nombre.length > 100) {
+        alert('El nombre debe tener 100 caracteres o menos.');
+        return false;
+    }
+
+    // Validar marca
+    if (!producto.marca) {
+        alert('La marca es requerida.');
+        return false;
+    }
+
+    // Validar modelo
+    var alfanumerico = /^[a-zA-Z0-9]+$/;
+    if (producto.modelo.length > 25) {
+        alert("El modelo debe tener 25 caracteres o menos.");
+        return false;
+    } else if (!alfanumerico.test(producto.modelo)) {
+        alert("El modelo debe ser alfanumérico.");
+        return false;
+    }
+
+    // Validar precio
+    var precioNumerico = parseFloat(producto.precio);
+    if (precioNumerico === 0) {
+        alert("El precio no puede ser 0.");
+        return false;
+    } else if (precioNumerico < 99.99) {
+        alert("El precio no puede ser menor a 99.99.");
+        return false;
+    }
+
+    // Validar unidades
+    var unidades = parseInt(producto.unidades, 10);
+    if (isNaN(unidades) || unidades < 0) {
+        alert("Las unidades son requeridas y deben ser un número mayor o igual a 0.");
+        return false;
+    }
+
+    // Validar detalles
+    if (producto.detalles.length >= 200) {
+        alert("Los detalles deben tener 250 caracteres o menos.");
+        return false;
+    }
+
+    // Validar imagen
+    if (!producto.imagen) {
+        alert("El path de la imagen es requerido.");
+        producto.imagen = 'http://localhost/tecweb/practicas/p09/img/img.png';
+    }
+
+    return true; // Si todas las validaciones pasan
+}
+
+
 // FUNCIÓN CALLBACK DE BOTÓN "Agregar Producto"
 function agregarProducto(e) {
     e.preventDefault();
@@ -153,15 +214,15 @@ function agregarProducto(e) {
     var finalJSON = JSON.parse(productoJsonString);
     // SE AGREGA AL JSON EL NOMBRE DEL PRODUCTO
     finalJSON['nombre'] = document.getElementById('name').value;
+    
+    // Validaciones de los datos en el JSON
+    if (!validarProducto(finalJSON)) {
+        // Si la validación falla, se detiene el proceso.
+        return;
+    }
+
     // SE OBTIENE EL STRING DEL JSON FINAL
     productoJsonString = JSON.stringify(finalJSON,null,2);
-
-/**
- * AQUÍ DEBES AGREGAR LAS VALIDACIONES DE LOS DATOS EN EL JSON
- * ...
- * 
- * --> EN CASO DE NO HABER ERRORES, SE ENVIAR EL PRODUCTO A AGREGAR
- */
 
     // SE CREA EL OBJETO DE CONEXIÓN ASÍNCRONA AL SERVIDOR
     var client = getXMLHttpRequest();
