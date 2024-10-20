@@ -22,6 +22,7 @@ function init() {
 }
 
 $(document).ready(function() {
+    let edit = false; 
     init();
     // SE LISTAN TODOS LOS PRODUCTOS
     listarProductos();
@@ -142,82 +143,88 @@ function validarProducto(producto) {
     return true; // Si todas las validaciones pasan
 }
 
-// Manejo del formulario para agregar producto
-$('#product-form').submit(e => {
-    e.preventDefault();
+    // Manejo del formulario para agregar/editar producto
+    $('#product-form').submit(e => {
+        e.preventDefault();
 
-    // Obtener los datos del formulario
-    let name = $('#name').val();
-    let descriptionText = $('#description').val();
+        // Obtener los datos del formulario
+        let name = $('#name').val().trim(); // Eliminar espacios en blanco
+        let descriptionText = $('#description').val().trim(); // Eliminar espacios en blanco
 
-    // Intentar parsear la descripción a JSON
-    let description;
-    try {
-        description = JSON.parse(descriptionText);  // Convertir a JSON
-        console.log(description);
-    } catch (error) {
-        alert('La descripción debe estar en formato JSON válido.');
-        return;
-    }
-
-    // Validar que la estructura del JSON sea correcta según baseJSON
-    if (!description.hasOwnProperty('precio') || 
-        !description.hasOwnProperty('unidades') || 
-        !description.hasOwnProperty('modelo') || 
-        !description.hasOwnProperty('marca') || 
-        !description.hasOwnProperty('detalles') || 
-        !description.hasOwnProperty('imagen')) {
-        alert('La descripción JSON debe contener los campos correctos: precio, unidades, modelo, marca, detalles, imagen.');
-        return;
-    }
-
-    // Crear objeto producto
-    const producto = {
-        nombre: name,
-        marca: description.marca,
-        modelo: description.modelo,
-        precio: description.precio,
-        detalles: description.detalles,
-        unidades: description.unidades,
-        imagen: description.imagen
-    };
-
-    // Validar el producto usando la función de validación
-    if (!validarProducto(producto)) {
-        return; // Si la validación falla, detener el envío
-    }
-
-    // Convertimos los datos a JSON
-    const jsonData = JSON.stringify(producto);
-
-    // Enviamos los datos al servidor
-    $.ajax({
-        url: 'backend/product-add.php', // Definir correctamente la URL
-        type: 'POST',
-        data: jsonData,
-        contentType: 'application/json', // Muy importante para que PHP lo reciba correctamente
-        success: function (response) {
-            try {
-                const res = JSON.parse(response);
-                if (res.status === "success") {
-                    alert(res.message); // Producto agregado correctamente
-                } else {
-                    alert(res.message); // Mensaje de error
-                }
-            } catch (error) {
-                console.error("Error al procesar el JSON:", error);
-                console.log("Respuesta recibida:", response); // Imprimir la respuesta que se está recibiendo para depurar
-            }
-
-            $('#product-form').trigger('reset');
-            init();
-            listarProductos(); // Llama a la función para obtener la lista actualizada de productos
-        },
-        error: function (xhr, status, error) {
-            console.error('Error al agregar el producto:', error);
+        // Validar que el nombre no esté vacío
+        if (!name) {
+            alert('El nombre del producto es obligatorio.');
+            return;
         }
+
+        // Intentar parsear la descripción a JSON
+        let description;
+        try {
+            description = JSON.parse(descriptionText);
+        } catch (error) {
+            alert('La descripción debe estar en formato JSON válido.');
+            return;
+        }
+
+        // Validar que la estructura del JSON sea correcta
+        if (!description.hasOwnProperty('precio') || 
+            !description.hasOwnProperty('unidades') || 
+            !description.hasOwnProperty('modelo') || 
+            !description.hasOwnProperty('marca') || 
+            !description.hasOwnProperty('detalles') || 
+            !description.hasOwnProperty('imagen')) {
+            alert('La descripción JSON debe contener los campos correctos: precio, unidades, modelo, marca, detalles, imagen.');
+            return;
+        }
+
+        // Crear objeto producto
+        const producto = {
+            nombre: name,
+            marca: description.marca,
+            modelo: description.modelo,
+            precio: description.precio,
+            detalles: description.detalles,
+            unidades: description.unidades,
+            imagen: description.imagen,
+            id: $('#productId').val() // ID del producto para editar
+        };
+
+        // Validar el producto usando la función de validación
+        if (!validarProducto(producto)) {
+            return; // Si la validación falla, detener el envío
+        }
+
+        // Determinar si estamos en modo editar o agregar
+        let url = producto.id ? 'backend/product-edit.php' : 'backend/product-add.php';
+
+        // Convertimos los datos a JSON
+        const jsonData = JSON.stringify(producto);
+
+        // Enviar la solicitud AJAX
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: jsonData,
+            contentType: 'application/json',
+            success: function (response) {
+                try {
+                    const res = JSON.parse(response);
+                    alert(res.message);
+                    $('#product-form').trigger('reset'); // Reiniciar el formulario
+                    init(); // Reiniciar el estado de la aplicación
+                    listarProductos(); // Actualizar la lista de productos
+                } catch (error) {
+                    console.error("Error al procesar el JSON:", error);
+                    console.log("Respuesta recibida:", response);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error al enviar los datos:', error);
+            }
+        });
     });
-});
+
+
 
     
     // Obtener todos los productos
@@ -237,16 +244,17 @@ $('#product-form').submit(e => {
                         descripcion += '<li>marca: ' + product.marca + '</li>';
                         descripcion += '<li>detalles: ' + product.detalles + '</li>';
                         template += `
-                            <tr productId="${product.id}">
-                                <td>${product.id}</td>
-                                <td>${product.nombre}</td>
-                                <td>${descripcion}</td>
-                                <td>
-                                    <button class="product-delete btn btn-danger">
-                                    Eliminar
-                                    </button>
-                                </td>
-                            </tr>
+
+                                <tr productId="${product.id}">
+                                    <td>${product.id}</td>
+                                    <td><a href="javascript:void(0);" class="product-item">${product.nombre}</a></td>
+                                    <td>${descripcion}</td>
+                                    <td>
+                                        <button class="product-delete btn btn-danger">Eliminar</button>
+                                    </td>
+                                </tr>
+                        
+
                         `;
                     });
                     $('#products').html(template);
@@ -257,6 +265,49 @@ $('#product-form').submit(e => {
             }
         });
     }
+
+
+// Obtener un Producto por ID
+$(document).on('click', '.product-item', function() { 
+    let element = $(this).closest('tr'); // Obtener la fila más cercana
+    let id = $(element).attr('productId'); // Obtener el ID desde el atributo
+
+    console.log("ID del producto: ", id); // Depuración: verifica si el ID se obtiene correctamente
+
+    // Hacemos la petición GET para obtener el producto por su ID
+    $.get('backend/product-single.php', { id }, function(response) {   
+        console.log("Respuesta del servidor: ", response); // Depuración: muestra la respuesta
+
+        const product = JSON.parse(response);
+
+        // Verificamos si el estado de la respuesta es "success"
+        if (product.status === 'success') {
+            console.log("Producto encontrado: ", product); // Depuración: muestra el producto encontrado
+
+            $('#name').val(product.producto.nombre); // Rellenar el campo de nombre
+
+            // Convertir los detalles del producto a JSON y mostrarlos en el campo #description
+            const description = {
+                precio: product.producto.precio,
+                unidades: product.producto.unidades,
+                modelo: product.producto.modelo,
+                marca: product.producto.marca,
+                detalles: product.producto.detalles,
+                imagen: product.producto.imagen
+            };
+
+            // Rellenar el campo de descripción en formato JSON
+            $('#description').val(JSON.stringify(description, null, 2)); // Formato JSON bonito
+            $('#productId').val(product.producto.id); // Rellenar el ID del producto
+            
+            edit = true; // Cambiar el estado a edit
+        } else {
+            alert(product.message);  // En caso de error, muestra el mensaje
+        }
+    });
+});
+
+
 
     // Eliminar un producto
     $(document).on('click', '.product-delete', (e) => {
