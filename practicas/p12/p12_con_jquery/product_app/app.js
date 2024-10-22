@@ -63,8 +63,7 @@ $(document).ready(function() {
                                 `;
                             });
                             $('#product-result').show(); // Mostrar resultados
-                            $('#container').html(template); // Mostrar productos en el contenedor
-                            $('#products').hide(); // Ocultar tabla de productos
+                            $('#container').html(template); // Mostrar productos en el contenedor // Ocultar tabla de productos
                         } else {
                             $('#product-result').hide(); // Ocultar si no hay productos
                             $('#products').show(); // Mostrar tabla de productos
@@ -143,86 +142,105 @@ function validarProducto(producto) {
     return true; // Si todas las validaciones pasan
 }
 
-    // Manejo del formulario para agregar/editar producto
-    $('#product-form').submit(e => {
-        e.preventDefault();
+$('#product-form').submit(e => {
+    e.preventDefault();
+    $('#product-result').hide(); 
 
-        // Obtener los datos del formulario
-        let name = $('#name').val().trim(); // Eliminar espacios en blanco
-        let descriptionText = $('#description').val().trim(); // Eliminar espacios en blanco
+    // Obtener los datos del formulario
+    let name = $('#name').val().trim(); // Eliminar espacios en blanco
+    let descriptionText = $('#description').val().trim(); // Eliminar espacios en blanco
+    const contenedor = $('#container');
+    contenedor.html(''); // Limpiar el contenedor antes de mostrar nuevos mensajes
 
-        // Validar que el nombre no esté vacío
-        if (!name) {
-            alert('El nombre del producto es obligatorio.');
-            return;
-        }
+    // Intentar parsear la descripción a JSON
+    let description;
+    try {
+        description = JSON.parse(descriptionText);
+    } catch (error) {
+        // Mostrar mensaje de error en el contenedor en lugar de una alerta
+        let template = `<li class="alert alert-danger">La descripción debe estar en formato JSON válido.</li>`;
+        contenedor.html(template); // Mostrar el mensaje en el contenedor
+        $('#product-result').show(); // Mostrar el contenedor de resultados
+        return; // Salir de la función
+    }
 
-        // Intentar parsear la descripción a JSON
-        let description;
-        try {
-            description = JSON.parse(descriptionText);
-        } catch (error) {
-            alert('La descripción debe estar en formato JSON válido.');
-            return;
-        }
+    // Validar que la estructura del JSON sea correcta
+    if (!description.hasOwnProperty('precio') || 
+        !description.hasOwnProperty('unidades') || 
+        !description.hasOwnProperty('modelo') || 
+        !description.hasOwnProperty('marca') || 
+        !description.hasOwnProperty('detalles') || 
+        !description.hasOwnProperty('imagen')) {
+        let template = `<li class="alert alert-danger">La descripción JSON debe contener los campos correctos: precio, unidades, modelo, marca, detalles, imagen.</li>`;
+        contenedor.html(template); // Mostrar el mensaje en el contenedor
+        $('#product-result').show(); // Mostrar el contenedor de resultados
+        return; // Salir de la función
+    }
 
-        // Validar que la estructura del JSON sea correcta
-        if (!description.hasOwnProperty('precio') || 
-            !description.hasOwnProperty('unidades') || 
-            !description.hasOwnProperty('modelo') || 
-            !description.hasOwnProperty('marca') || 
-            !description.hasOwnProperty('detalles') || 
-            !description.hasOwnProperty('imagen')) {
-            alert('La descripción JSON debe contener los campos correctos: precio, unidades, modelo, marca, detalles, imagen.');
-            return;
-        }
+    // Crear objeto producto
+    const producto = {
+        nombre: name,
+        marca: description.marca,
+        modelo: description.modelo,
+        precio: description.precio,
+        detalles: description.detalles,
+        unidades: description.unidades,
+        imagen: description.imagen,
+        id: $('#productId').val() // ID del producto para editar
+    };
 
-        // Crear objeto producto
-        const producto = {
-            nombre: name,
-            marca: description.marca,
-            modelo: description.modelo,
-            precio: description.precio,
-            detalles: description.detalles,
-            unidades: description.unidades,
-            imagen: description.imagen,
-            id: $('#productId').val() // ID del producto para editar
-        };
+    // Validar el producto usando la función de validación
+    if (!validarProducto(producto)) {
+        return; // Si la validación falla, detener el envío
+    }
 
-        // Validar el producto usando la función de validación
-        if (!validarProducto(producto)) {
-            return; // Si la validación falla, detener el envío
-        }
+    // Determinar si estamos en modo editar o agregar
+    let url = producto.id ? 'backend/product-edit.php' : 'backend/product-add.php';
 
-        // Determinar si estamos en modo editar o agregar
-        let url = producto.id ? 'backend/product-edit.php' : 'backend/product-add.php';
+    // Convertimos los datos a JSON
+    const jsonData = JSON.stringify(producto);
 
-        // Convertimos los datos a JSON
-        const jsonData = JSON.stringify(producto);
-
-        // Enviar la solicitud AJAX
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: jsonData,
-            contentType: 'application/json',
-            success: function (response) {
-                try {
-                    const res = JSON.parse(response);
-                    alert(res.message);
+    // Enviar la solicitud AJAX
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: jsonData,
+        contentType: 'application/json',
+        success: function (response) {
+            try {
+                const res = JSON.parse(response);
+                let template = '';
+                if (res.status === "success") {
+                    let mensaje = producto.id ? 'Producto editado correctamente' : 'Producto agregado correctamente';
+                    template = `<li class="alert alert-success"><strong>${mensaje}</strong></li>`;
                     $('#product-form').trigger('reset'); // Reiniciar el formulario
                     init(); // Reiniciar el estado de la aplicación
                     listarProductos(); // Actualizar la lista de productos
-                } catch (error) {
-                    console.error("Error al procesar el JSON:", error);
-                    console.log("Respuesta recibida:", response);
+                } else {
+                    // Mensaje de error en el contenedor
+                    template = `<li class="alert alert-danger">${res.message}</li>`;
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error('Error al enviar los datos:', error);
+
+                // Mostrar el mensaje en el contenedor
+                contenedor.html(template);
+                $('#product-result').show(); // Mostrar el contenedor de resultados
+            } catch (error) {
+                console.error("Error al procesar el JSON:", error);
+                let errorTemplate = `<li class="alert alert-danger">Error al procesar la respuesta del servidor.</li>`;
+                contenedor.html(errorTemplate); // Mostrar error de procesamiento en el contenedor
+                $('#product-result').show(); // Mostrar el contenedor de resultados
             }
-        });
+        },
+        error: function (xhr, status, error) {
+            console.error('Error al enviar los datos:', error);
+            let errorTemplate = `<li class="alert alert-danger">Error al enviar la solicitud. Inténtalo de nuevo.</li>`;
+            contenedor.html(errorTemplate); // Mostrar error de solicitud en el contenedor
+            $('#product-result').show(); // Mostrar el contenedor de resultados
+        }
     });
+});
+
+
 
 
 
