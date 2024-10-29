@@ -1,15 +1,18 @@
 <?php
-include_once __DIR__.'/database.php';
+// Conexión a la base de datos
+include 'db_connection.php'; // Cambia esto según tu configuración
 
-$response = ['exists' => false];
 if (isset($_GET['name'])) {
-    $name = $conexion->real_escape_string($_GET['name']);
-    $result = $conexion->query("SELECT id FROM productos WHERE nombre = '$name' AND eliminado = 0");
+    $name = $_GET['name'];
+    $query = "SELECT COUNT(*) as count FROM productos WHERE nombre = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $name);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $data = $result->fetch_assoc();
 
-    if ($result && $result->num_rows > 0) {
-        $response['exists'] = true;
-    }
+    echo json_encode(['exists' => $data['count'] > 0]);
+} else {
+    echo json_encode(['exists' => false]);
 }
-
-echo json_encode($response);
 ?>
