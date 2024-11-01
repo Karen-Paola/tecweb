@@ -9,6 +9,7 @@ var baseJSON = {
   };
 
 function init() {
+    
     /**
      * Convierte el JSON a string para poder mostrarlo
      * ver: https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/JSON
@@ -19,11 +20,16 @@ function init() {
 
     // SE LISTAN TODOS LOS PRODUCTOS
     //listarProductos();
+
+    //cd
 }
 
 $(document).ready(function() {
+
     let edit = false; 
+
     init();
+
     // SE LISTAN TODOS LOS PRODUCTOS
     listarProductos();
     console.log('jQuery is working!');
@@ -93,26 +99,26 @@ $(document).ready(function() {
         if (name === '' || name.length > 100) {
             $('#container').text('Nombre es requerido y debe tener 100 caracteres o menos.');
             $('#product-result').show();
-            return false;
+            return Promise.reject(); // Retornar una promesa rechazada
         }
     
-        // Validación asincrónica de nombre único
-        return $.get('backend/product-name.php', { name }, function(response) {
-            try {
+        return $.get('backend/product-name.php', { name })
+            .then(response => {
                 const data = JSON.parse(response);
                 if (data.exists) {
                     $('#container').text('Nombre ya existe. Elige otro nombre.');
                     $('#product-result').show();
-                    return false;
+                    return Promise.reject(); // Retornar una promesa rechazada
                 }
-                $('#product-result').hide(); // Oculta el mensaje de error si es válido
-                return true;
-            } catch (error) {
-                console.error('Error al parsear JSON en validateName:', error);
-                return false;
-            }
-        });
+                return Promise.resolve(); // Retornar una promesa resuelta
+            })
+            .catch(() => {
+                $('#container').text('Error al verificar el nombre del producto.');
+                $('#product-result').show();
+                return Promise.reject(); // Retornar una promesa rechazada en caso de error
+            });
     }
+    
     
     
     function validateMarca() {
@@ -156,43 +162,51 @@ $(document).ready(function() {
     // * AGREGAR PRODUCTO (envío de formulario) *
     $('#product-form').submit(function (e) {
         e.preventDefault();
-        if (!validateName() || !validateMarca() || !validateModelo() || !validatePrecio() || !validateUnidades()) {
+        
+        // Ejecuta todas las validaciones y maneja las promesas
+        Promise.all([
+            validateName(),
+            validateMarca(),
+            validateModelo(),
+            validatePrecio(),
+            validateUnidades()
+        ]).then(() => {
+            const postData = {
+                nombre: $('#name').val(),
+                marca: $('#marca').val(),
+                modelo: $('#modelo').val(),
+                precio: parseFloat($('#precio').val()),
+                detalles: $('#detalles').val(),
+                unidades: parseInt($('#unidades').val()),
+                imagen: $('#imagen').val(),
+                id: $('#product-id').val()
+            };
+    
+            // Envío de los datos al backend
+            $.ajax({
+                url: edit ? 'backend/product-edit.php' : 'backend/product-add.php',
+                type: 'POST',
+                data: JSON.stringify(postData),
+                contentType: 'application/json',
+                success: function (response) {
+                    const res = JSON.parse(response);
+                    $('#container').text(res.message);
+                    $('#product-result').show();
+                    if (res.status === "success") {
+                        listarProductos();
+                        $('#product-form').trigger('reset');
+                    }
+                },
+                error: function () {
+                    $('#container').text('Error al agregar o editar el producto.');
+                    $('#product-result').show();
+                }
+            });
+        }).catch(() => {
             $('#container').text('Por favor, corrige los errores antes de enviar.');
             $('#product-result').show();
-            return;
-        }
-    
-        const postData = {
-            nombre: $('#name').val(),
-            marca: $('#marca').val(),
-            modelo: $('#modelo').val(),
-            precio: parseFloat($('#precio').val()),
-            detalles: $('#detalles').val(),
-            unidades: parseInt($('#unidades').val()),
-            imagen: $('#imagen').val(),
-            id: $('#product-id').val()
-        };
-        
-        $.ajax({
-            url: edit ? 'backend/product-edit.php' : 'backend/product-add.php',
-            type: 'POST',
-            data: JSON.stringify(postData),
-            contentType: 'application/json',
-            success: function (response) {
-                const res = JSON.parse(response);
-                $('#container').text(res.message);
-                $('#product-result').show();
-                if (res.status === "success") {
-                    listarProductos();
-                    $('#product-form').trigger('reset');
-                }
-            },
-            error: function () {
-                $('#container').text('Error al agregar o editar el producto.');
-                $('#product-result').show();
-            }
         });
-    });
+    });    
     
 
 
@@ -282,8 +296,6 @@ $(document).on('click', '.product-item', function() {
         }
     });
 });
-
-
 
     // Eliminar un producto
     $(document).on('click', '.product-delete', (e) => {
