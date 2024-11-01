@@ -1,18 +1,20 @@
 <?php
-// Conexión a la base de datos
-include 'db_connection.php'; // Cambia esto según tu configuración
+header('Content-Type: application/json');
+include_once __DIR__.'/database.php';
 
-if (isset($_GET['name'])) {
-    $name = $_GET['name'];
-    $query = "SELECT COUNT(*) as count FROM productos WHERE nombre = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $name);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $data = $result->fetch_assoc();
+$name = mysqli_real_escape_string($conn, $_GET['name']);
+$id = isset($_GET['id']) ? mysqli_real_escape_string($conn, $_GET['id']) : null;
 
-    echo json_encode(['exists' => $data['count'] > 0]);
+if ($id) {
+    // Validar si el nombre existe, pero excluir el ID actual
+    $query = "SELECT COUNT(*) as count FROM productos WHERE nombre='$name' AND id != '$id'";
 } else {
-    echo json_encode(['exists' => false]);
+    // Si no hay ID, simplemente contar todos los nombres
+    $query = "SELECT COUNT(*) as count FROM productos WHERE nombre='$name'";
 }
+
+$result = mysqli_query($conn, $query);
+$data = mysqli_fetch_assoc($result);
+
+echo json_encode(['exists' => $data['count'] > 0]);
 ?>
