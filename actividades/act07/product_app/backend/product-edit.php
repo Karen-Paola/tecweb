@@ -4,7 +4,7 @@
     // Incluye el archivo de la clase Products
     include_once __DIR__.'/myapi/Products.php';
 
-    $products = New Products();
+    $products = New Products('marketzone');
 
     $products->edit(file_get_contents('php://input'));
 

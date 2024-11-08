@@ -1,8 +1,10 @@
 <?php
+namespace MyApi;
+
 abstract class DataBase {
     protected $conexion = NULL;
     
-    public function __construct($user,$pass,$db) {
+    public function __construct($db, $user, $pass) {
         $this->conexion = @mysqli_connect(
             'localhost',
             $user,
@@ -10,10 +12,6 @@ abstract class DataBase {
             $db
         );
 
-        // Si la conexión falló contendrá false
-        if (!$this->conexion) {
-            die('Error de conexión (' . mysqli_connect_errno() . ') ' . mysqli_connect_error());
-        }
     }
 }
 ?>

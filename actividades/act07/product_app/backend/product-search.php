@@ -5,7 +5,7 @@
     include_once __DIR__.'/myapi/Products.php';
 
     // Creamos una instancia de la clase Products
-    $products = New Products();
+    $products = New Products('marketzone');
     
     // Llamamos al método search para realizar la búsqueda
     $products->search($_GET['search'] ?? '');

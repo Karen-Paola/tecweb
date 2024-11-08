@@ -3,7 +3,7 @@
     
     include_once __DIR__.'/myapi/Products.php';
 
-    $products = New Products();
+    $products = New Products('marketzone');
 
     $products->singleByName($_GET['name']);
 
