@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CatalogoVOD>
+    <cuenta correo="paredeskrnm@gmail">
+        <perfiles>
+            <perfil usuario="Anís" idioma="Español"/>
+            <perfil usuario='Leopolda' idioma='Español'/>
+        </perfiles>
+    </cuenta>
+    
+    <contenido>
+        <peliculas>
+            <genero Nombre="Ficcion">
+                <titulo nombre="Divergente" duracion="2 horas 19 minutos"/>
+                <titulo nombre="Maze Runner" duracion="1 hora 53 minutos"/>
+                <titulo nombre="Los juegos del hambre" duracion="2 horas 22 minutos"/>
+                <titulo nombre="Ready Player One" duracion="2 horas 20 minutos"/>
+            </genero>
+            <genero Nombre="Romance">
+                <titulo nombre="Love, Rosie" duracion="1 hora 42 minutos"/>
+                <titulo nombre="A Walk to Remember" duracion="1 hora 41 minutos"/>
+                <titulo nombre="The Proposal" duracion="1 hora 47 minutos"/>
+                <titulo nombre="To All the Boys I've Loved Before" duracion="1 hora 39 minutos"/>
+            </genero>  
+        </peliculas>
+        
+        <programas>
+            <genero Nombre="Romance">
+                <titulo nombre="True Beauty" duracion="1 temporada"/>
+                <titulo nombre="Goblin" duracion="1 temporada"/>
+                <titulo nombre="Alquimia de almas" duracion="1 temporada"/>
+                <titulo nombre="Dash y Lili" duracion="1 temporada"/>
+            </genero>
+            <genero Nombre="Fabtasia">
+                <titulo nombre="Shadowhunters" duracion="3 temporadas"/>
+                <titulo nombre="Sabrina" duracion="4 temporadas"/>
+                <titulo nombre="Teen wolf" duracion="6 temporadas"/>
+                <titulo nombre="The Vampire Diaries" duracion="8 temporadas"/>
+            </genero> 
+        </programas>
+    </contenido>
+    
+</CatalogoVOD>
