@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE cinefanatico SYSTEM "cinefanatico.dtd">
+<cinefanatico>
+    <tarjeta noserie="12345678a" visitas="1" puntos="11">
+        <nombre>Lex</nombre>
+        <correo>lexmrtnp@gmail.com</correo>
+        <telefono tipo="movil">22224040</telefono>
+    </tarjeta>
+</cinefanatico>
