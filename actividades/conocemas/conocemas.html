@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Conoce más</title>
+    <!-- Cargando bootstrap.css descargado -->
+    <link rel="stylesheet" href="bootstrap.css">
+    <style>
+        /* Color verde personalizado */
+    :root {
+        --bs-success-border-subtle: #016e46; /* Verde principal */
+      }
+  
+      /* Estilo del texto principal */
+      .hero-text {
+        color: var(--bs-success-border-subtle); /* Verde personalizado */
+        text-align: center;
+        font-weight: bold;
+        font-size: 2rem;
+        margin-bottom: 30px;
+      }
+  
+      /* Estilo general para los contenedores */
+      .custom-container {
+        min-height: 300px;
+        background-color: #f4f4f4; /* Color de fondo claro */
+        padding: 0; /* Eliminamos padding externo */
+        border-radius: 8px;
+        border: 1px solid #ccc;
+      }
+  
+      /* Encabezado de los contenedores */
+      .container-header {
+        background-color: var(--bs-success-border-subtle); /* Fondo verde */
+        color: #fff; /* Texto blanco */
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 8px 8px 0 0; /* Esquinas superiores redondeadas */
+      }
+  
+      /* Contenido de los contenedores */
+      .container-body {
+        padding: 20px;
+        color: #333; /* Texto oscuro */
+      }
+  
+      /* Centrado vertical y horizontal */
+      .custom-row {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 20px;
+        flex-wrap: wrap; /* Adaptable para pantallas pequeñas */
+      }
+  
+      /* Contenedor extra para alineación */
+      .contact-container {
+        margin-top: 20px;
+      }
+      </style>
+</head>
+<body>
+        <!--Barra de navegación -->
+        <nav class="navbar navbar-expand-lg" style="background-color: #efe8e8; color: black;" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html" style="color: black !important;">
+                    <img src="logo.png" alt="Logo" width="200" height="75" class="d-inline-block align-text-top">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html" style="color: black !important; font-size: 1.5rem;">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="estadisticas.html" style="color: black !important; font-size: 1.5rem;">Estadísticas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="conocemas.html" style="color: black !important; font-size: 1.5rem;">Conoce más</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+          </nav>
+        
+          <div class="container">
+            <!-- Texto principal centrado -->
+            <div class="row">
+              <div class="col-12">
+                <h1 class="hero-text">CONOCE SOBRE MÁS EMPRESAS</h1>
+              </div>
+            </div>
+
+        <!-- Contenedores principales -->
+    <div class="row custom-row">
+        <!-- Contenedor Lista de empresas -->
+        <div class="col-md-3">
+          <div class="custom-container">
+            <div class="container-header">Lista de empresas</div>
+            <div class="container-body">
+              <ul>
+                <li>Empresa 1</li>
+                <li>Empresa 2</li>
+                <li>Empresa 3</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Contenedor Información de empresa -->
+        <div class="col-md-4">
+          <div class="custom-container">
+            <div class="container-header">Información de empresas seleccionada</div>
+            <div class="container-body">
+              <p>Aquí aparecerán los detalles de la empresa seleccionada.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Contenedor Contacto a las empresas -->
+        <div class="col-md-4 contact-container">
+          <div class="custom-container">
+            <div class="container-header">Contacto a las empresas</div>
+            <div class="container-body">
+              <p>Puedes contactar a las empresas</p>
+              <ul>
+                <li>Correo: contacto@algo.com</li>
+                <li>Teléfono: 2 123 456 7890</li>
+                <li>WhatsApp: 2 987 654 3210</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+</body>
+</html>
